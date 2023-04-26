@@ -8,7 +8,7 @@ import sendNotify
 def shenyu(user,password):
     headers = {
         'Accept': 'application/json, text/javascript, */*; q=0.01',
-        'Referer': 'http://www.acg088.com/',
+        'Referer': 'http://www.acg066.com/',
         'X-Requested-With': 'XMLHttpRequest',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -21,9 +21,9 @@ def shenyu(user,password):
         'rememberme': '1',
     }
     session =requests.session()
-    response = session.post('http://www.acg088.com/wp-admin/admin-ajax.php', headers=headers, data=data)
+    response = session.post('http://www.acg066.com/wp-admin/admin-ajax.php', headers=headers, data=data)
 
-    response=session.get('http://www.acg088.com/user/vip',headers=headers,cookies=response.cookies,verify=False)
+    response=session.get('http://www.acg066.com/user/vip',headers=headers,cookies=response.cookies,verify=False)
     bb=re.findall('<button class="btn btn-sm btn-info w-100 mt-3 go-user-qiandao" data-nonce="(.*?)"',response.text)
     try:
         nonce=bb[0]
@@ -34,7 +34,7 @@ def shenyu(user,password):
 
     headers = {
         'Accept': 'application/json, text/javascript, */*; q=0.01',
-        'Referer': 'http://www.acg088.com/user/vip',
+        'Referer': 'http://www.acg066.com/user/vip',
         'X-Requested-With': 'XMLHttpRequest',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -46,7 +46,7 @@ def shenyu(user,password):
         'nonce': nonce,
     }
 
-    response = session.post('http://www.acg088.com/wp-admin/admin-ajax.php', cookies=response.cookies,headers=headers, data=data)
+    response = session.post('http://www.acg066.com/wp-admin/admin-ajax.php', cookies=response.cookies,headers=headers, data=data)
 
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -57,7 +57,7 @@ def shenyu(user,password):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
     }
 
-    response = session.get('http://www.acg088.com/user/coin', cookies=response.cookies, headers=headers, verify=False)
+    response = session.get('http://www.acg066.com/user/coin', cookies=response.cookies, headers=headers, verify=False)
     coin=re.findall('<p class="small m-0">(.*?)</p>',response.text)
     
     try:
@@ -75,7 +75,10 @@ if __name__ == '__main__':
     PW2=os.environ['PW2']
     USER3=os.environ['USER3']
     PW3=os.environ['PW3']
-    account=[[USER1,PW1],[USER2,PW2],[USER3,PW3]]
+    USER4=os.environ['USER4']
+    PW4=os.environ['PW4']
+    #account=[[USER1,PW1],[USER2,PW2],[USER3,PW3]]
+    account=[[USER4,PW4]]
     for user,password in account:
         shenyu(user,password)
         time.sleep(5)
