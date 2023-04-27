@@ -1,0 +1,56 @@
+name: shenyu
+on: 
+  release:
+    types: [published]
+  push:
+    tags:
+    - 'v*'
+  #  branches: 
+  #    - master
+  schedule:
+    - cron: '30 7 * * *'
+
+  watch:
+    types: [started]
+    
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id || github.event_name == 'schedule'  # 自己点的 start
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4.3.0
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Test Api #Api调用
+      env:
+        DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+        DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+        PW1: ${{ secrets.PW1 }}
+        PW2: ${{ secrets.PW2 }}
+        PW3: ${{ secrets.PW3 }}
+        USER1: ${{ secrets.USER1 }}
+        USER2: ${{ secrets.USER2 }}
+        USER3: ${{ secrets.USER3 }}
+        PW4: ${{ secrets.PW4 }}
+        USER4: ${{ secrets.USER4 }}
+      run: | 
+        echo `date +"%Y-%m-%d %H:%M:%S"` begin > time.log
+        python shenyu.py
+    - name: Commit #上传新的refresh_token到仓库
+      run: |
+        git config --global user.email AutoupdateRobot@email.com
+        git config --global user.name AutoupdateRobot
+        git add .
+        git commit -m "update new refresh_token" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
