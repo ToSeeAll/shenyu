@@ -69,17 +69,18 @@ def shenyu(user,password):
 
 
 if __name__ == '__main__':
-    USER1=os.environ['USER1']
-    PW1=os.environ['PW1']
-    USER2=os.environ['USER2']
-    PW2=os.environ['PW2']
-    USER3=os.environ['USER3']
-    PW3=os.environ['PW3']
+#     USER1=os.environ['USER1']
+#     PW1=os.environ['PW1']
+#     USER2=os.environ['USER2']
+#     PW2=os.environ['PW2']
+#     USER3=os.environ['USER3']
+#     PW3=os.environ['PW3']
     USER4=os.environ['USER4']
     PW4=os.environ['PW4']
     #account=[[USER1,PW1],[USER2,PW2],[USER3,PW3]]
-    account=[[USER4,PW4]]
-    for user,password in account:
-        shenyu(user,password)
-        time.sleep(5)
+#     account=[[USER4,PW4]]
+    shenyu(USER4,PW4)
+#     for user,password in account:
+#         shenyu(user,password)
+#         time.sleep(5)
         
